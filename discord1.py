@@ -9,7 +9,7 @@ import requests
 from lxml import html
 
 BOT_PREFIX = ("?", "!")
-TOKEN = 'NzA1Nzg5OTc2Mzk0MzM0MzI0.XqxDCQ.EdofsfJiDPGBzZ4IcRutLe2WITU'
+TOKEN = 'NzA1Nzg5OTc2Mzk0MzM0MzI0.Xq7PVQ.jAHGgQ18AYH73IqB6W-8rJFzsHM'
 
 players = {}
 
@@ -135,7 +135,7 @@ async def play(ctx, *, query=None):
 
     player = await YTDLSource.from_url(url)
     # if not ctx.bot.voice_clients:
-    channel = ctx.message.author.voice.channel
+    # channel = ctx.message.author.voice.channel
     # if not discord.VoiceChannel.connect(channel).is_connected():
     # vc = await  discord.VoiceChannel.connect(channel)
     print('&&&&&&&&&&&&&&&&&&&&\n', ctx.bot.voice_clients)
@@ -165,8 +165,14 @@ async def resume(ctx,):
     
     
     
-    
-    
+@client.command(pass_context=True)
+async def time(ctx, loc=None):
+    url = f"https://www.timeanddate.com/worldclock/{loc}"    
+    r = requests.get(url , timeout = 100)
+    tree = html.fromstring(r.text)
+    url = tree.xpath('//div/span[@id="ct"]/text()')
+    print(url[0])  
+    await ctx.send(f"time at {loc} is : {url[0]}")  
     
     
     
