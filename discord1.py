@@ -8,8 +8,8 @@ import youtube_dl
 import requests
 from lxml import html
 
-BOT_PREFIX = ("?", "!")
-TOKEN = 'NzA1Nzg5OTc2Mzk0MzM0MzI0.Xq7PVQ.jAHGgQ18AYH73IqB6W-8rJFzsHM'
+BOT_PREFIX = ("?", "!", "-")
+TOKEN = 'NzA1Nzg5OTc2Mzk0MzM0MzI0.Xq7ZIg.I2DlHxSrb81fIPaK6vGp2Sh734M'
 
 players = {}
 
@@ -123,25 +123,16 @@ async def play(ctx, *, query=None):
     print(ctx.bot.voice_clients)
     print(ctx.voice_client)
     server = ctx.message.guild
-    # print('\n\n\n\n', dir(client))
-    # print(client.voice_clients)
-    # voice_cient = client.voice_clients(server)
-    # player = await voice_cient.create_ytdl_player(url)
-    # server[server.id] = player
-    # player.start()
-    # channel = ctx.message.author.voicevoice_channel
-    # # await ctx.send(":smiley: :wave: Hello, there!")
-    # await client.join_voice_channel(channel)
+
 
     player = await YTDLSource.from_url(url)
-    # if not ctx.bot.voice_clients:
-    # channel = ctx.message.author.voice.channel
-    # if not discord.VoiceChannel.connect(channel).is_connected():
-    # vc = await  discord.VoiceChannel.connect(channel)
     print('&&&&&&&&&&&&&&&&&&&&\n', ctx.bot.voice_clients)
     # print('\n\n\n\n', dir(vc))
     # vc.play(discord.FFmpegPCMAudio(url), after=lambda e: print('done', e))
+    # try:
     ctx.bot.voice_clients[0].play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+    # except Exception(e):
+    #     print(e)
     await ctx.send('Now playing: {}'.format(player.title))
     
     
